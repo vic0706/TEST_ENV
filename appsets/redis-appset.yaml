@@ -8,11 +8,13 @@ spec:
   - list:
       elements:
       - cluster: asia-dev-uat
-        namespace: redis
+        namespace: redis-uat
         url: https://kubernetes.default.svc
-      - cluster: asia-dev
-        namespace: redis
+        syncPolicy: automated
+      - cluster: asia-dev-uat
+        namespace: redis-prod
         url: https://kubernetes.default.svc
+        syncPolicy: manual
   template:
     metadata:
       name: '{{cluster}}-redis'
