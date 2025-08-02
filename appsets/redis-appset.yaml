@@ -1,44 +1,42 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-    name: redis-appset
-    namespace: argocd
+  name: redis-appset
+  namespace: argocd
 spec:
-    generators:
-    - list:
-        elements:
-        - env: staging
-          namespace: redis-uat
-          url: https://kubernetes.default.svc
-          syncPolicy: automated
-          valuesFile: values-staging.yaml
-        - env: production
-          namespace: redis-prod
-          url: https://kubernetes.default.svc
-          syncPolicy: manual
-          valuesFile: values-production.yaml
-    template:
-        metadata:
-            name: '{{env}}-redis'           # Application 名稱用環境變數
-        spec:
-            project: default
-            source:
-                repoURL: https://charts.bitnami.com/bitnami
-                chart: redis
-                targetRevision: 18.3.0
-                helm:
-                    releaseName: redis
-                    valueFiles:
-                    - charts/redis/{{valuesFile}}   # 指定 values 檔案路徑
-            destination:
-                server: '{{url}}'
-                namespace: '{{namespace}}'
-            syncPolicy:
-                {{- if eq .syncPolicy "automated" }}
-                automated:
-                    prune: true
-                    selfHeal: true
-                {{- end }}
-                syncOptions:
-                - CreateNamespace=true
+  generators:
+  - list:
+      elements:
+      - env: staging
+        namespace: redis-uat
+        url: https://kubernetes.default.svc
+        automated: true
+        valuesFile: values-staging.yaml
+      - env: production
+        namespace: redis-prod
+        url: https://kubernetes.default.svc
+        automated: false
+        valuesFile: values-production.yaml
+  template:
+    metadata:
+      name: '{{env}}-redis'
+    spec:
+      project: default
+      source:
+        repoURL: https://charts.bitnami.com/bitnami
+        chart: redis
+        targetRevision: 18.3.0
+        helm:
+          releaseName: redis
+          valueFiles:
+          - charts/redis/{{valuesFile}}
+      destination:
+        server: '{{url}}'
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: {{ .automated }}
+          selfHeal: {{ .automated }}
+        syncOptions:
+        - CreateNamespace=true
 
