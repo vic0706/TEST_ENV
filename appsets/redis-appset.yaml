@@ -28,7 +28,7 @@ spec:
         targetRevision: 18.3.0
         helm:
           releaseName: redis
-          valuesFiles:
+          valueFiles:
           - /charts/redis/{{valuesFile}}
       destination:
         server: '{{url}}'
