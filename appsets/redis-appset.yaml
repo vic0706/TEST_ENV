@@ -29,13 +29,13 @@ spec:
         helm:
           releaseName: redis-{{env}}
           valuesFiles:
-          - {{valuesFile}}
+          - '{{valuesFile}}'
       destination:
         server: '{{url}}'
         namespace: '{{namespace}}'
       syncPolicy:
         automated:
-          prune: {{ if eq .automated true }}true{{ else }}false{{ end }}
-          selfHeal: {{ if eq .automated true }}true{{ else }}false{{ end }}
+          prune: true
+          selfHeal: true
         syncOptions:
         - CreateNamespace=true
