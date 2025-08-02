@@ -29,7 +29,7 @@ spec:
         helm:
           releaseName: redis-{{env}}
           valuesFiles:
-          - '{{valuesFile}}'
+          - "charts/redis/{{valuesFile}}"
       destination:
         server: '{{url}}'
         namespace: '{{namespace}}'
