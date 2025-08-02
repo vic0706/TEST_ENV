@@ -7,23 +7,23 @@ spec:
   generators:
   - list:
       elements:
-      - cluster: asia-dev-uat
+      - env: staging
         namespace: redis-uat
         url: https://kubernetes.default.svc
         syncPolicy: automated
-      - cluster: asia-dev-uat
+      - env: production
         namespace: redis-prod
         url: https://kubernetes.default.svc
         syncPolicy: manual
-  template:
+  template
     metadata:
-      name: '{{cluster}}-redis'
+      name: '{{env}}-redis'
     spec:
       project: default
       source:
         repoURL: https://github.com/vic0706/TEST_ENV.git
         targetRevision: main
-        path: apps/redis/overlays/{{cluster}}
+        path: apps/redis/overlays/{{env}}
       destination:
         server: '{{url}}'
         namespace: '{{namespace}}'
