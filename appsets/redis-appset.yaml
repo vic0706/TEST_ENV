@@ -34,8 +34,10 @@ spec:
         server: '{{url}}'
         namespace: '{{namespace}}'
       syncPolicy:
+        {{- if eq .syncPolicy "automated" }}
         automated:
-          prune: '{{#if eq .syncPolicy "automated"}}true{{else}}false{{/if}}'
-          selfHeal: '{{#if eq .syncPolicy "automated"}}true{{else}}false{{/if}}'
+          prune: true
+          selfHeal: true
+        {{- end }}
         syncOptions:
         - CreateNamespace=true
