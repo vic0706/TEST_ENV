@@ -27,16 +27,15 @@ spec:
         chart: redis
         targetRevision: 18.3.0
         helm:
-          releaseName: redis
+          releaseName: redis-{{env}}
           valuesFiles:
-          - charts/redis/{{valuesFile}}
+          - {{valuesFile}}
       destination:
         server: '{{url}}'
         namespace: '{{namespace}}'
       syncPolicy:
         automated:
-          prune: {{ .automated }}
-          selfHeal: {{ .automated }}
+          prune: {{ if eq .automated true }}true{{ else }}false{{ end }}
+          selfHeal: {{ if eq .automated true }}true{{ else }}false{{ end }}
         syncOptions:
         - CreateNamespace=true
-
