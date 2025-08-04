@@ -5,37 +5,33 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - list:
-      elements:
-      - env: staging
-        namespace: redis-uat
-        url: https://kubernetes.default.svc
-        automated: true
-        valuesFile: values-staging.yaml
-      - env: production
-        namespace: redis-prod
-        url: https://kubernetes.default.svc
-        automated: false
-        valuesFile: values-production.yaml
+    - list:
+        elements:
+          - env: uat
+            namespace: redis-uat
+            valueFile: values/uat-values.yaml
+          - env: prod
+            namespace: redis-prod
+            valueFile: values/prod-values.yaml
   template:
     metadata:
-      name: '{{env}}-redis'
+      name: redis-{{env}}
     spec:
       project: default
       source:
-        repoURL: https://charts.bitnami.com/bitnami
+        repoURL: https://github.com/vic0706/TEST_ENV.git   # << 請換成你的 GitLab repo
+        targetRevision: HEAD
         chart: redis
-        targetRevision: 18.3.0
+        repoURL: https://charts.bitnami.com/bitnami
         helm:
-          releaseName: redis-{{env}}
-          valuesFiles:
-          - "charts/redis/{{valuesFile}}"
+          valueFiles:
+            - '{{valueFile}}'
       destination:
-        server: '{{url}}'
+        server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
