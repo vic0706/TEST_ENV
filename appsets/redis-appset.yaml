@@ -21,8 +21,7 @@ spec:
       source:
         repoURL: https://github.com/vic0706/TEST_ENV.git   # << 請換成你的 GitLab repo
         targetRevision: HEAD
-        chart: redis
-        repoURL: https://charts.bitnami.com/bitnami
+        path: .
         helm:
           valueFiles:
             - '{{valueFile}}'
