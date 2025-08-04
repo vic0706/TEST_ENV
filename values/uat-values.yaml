@@ -1,0 +1,9 @@
+replica:
+  count: 1
+
+auth:
+  enabled: true
+  password: uat-redis-pass
+
+metrics:
+  enabled: true
