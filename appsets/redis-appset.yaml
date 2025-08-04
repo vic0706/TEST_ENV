@@ -9,10 +9,10 @@ spec:
         elements:
           - env: uat
             namespace: redis-uat
-            valueFile: values/uat-values.yaml
+            valueFile: ../../values/uat-values.yaml
           - env: prod
             namespace: redis-prod
-            valueFile: values/prod-values.yaml
+            valueFile: ../../values/prod-values.yaml
   template:
     metadata:
       name: redis-{{env}}
