@@ -1,0 +1,5 @@
+{
+  "name": "Louie RUNBIKE",
+  "description": "專為滑步車選手 Louie 設計。支援連續輸入、CSV導入、自訂賽道管理與賽事履歷追蹤。",
+  "requestFramePermissions": []
+}

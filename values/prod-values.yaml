@@ -1,9 +1,0 @@
-replica:
-  count: 3
-
-auth:
-  enabled: true
-  password: prod-redis-secure-pass
-
-metrics:
-  enabled: true
